@@ -16,6 +16,17 @@ return [
     'name' => env('APP_NAME', 'Laravel'),
 
     /*
+     |------------------------------------------------------------------------
+     | Weather API Information
+     |------------------------------------------------------------------------
+     | This value is the app id of the weather api, required by
+     | WeatherController to get forecast data.
+     */
+
+    'weather_app_id' =>env('WEATHER_APPID'),
+
+
+    /*
     |--------------------------------------------------------------------------
     | Application Environment
     |--------------------------------------------------------------------------
