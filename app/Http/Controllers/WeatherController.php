@@ -47,7 +47,7 @@ class WeatherController extends Controller
     protected function getTemperature(){
         if(is_array($this->weather) && $this->weather!=null && array_key_exists('main', $this->weather)){
             if(array_key_exists('temp', $this->weather['main'])){
-                return $this->weather['main']['temp'];
+                return $this->KelvinToF($this->weather['main']['temp']);
             }
         }
         return null;
@@ -59,5 +59,14 @@ class WeatherController extends Controller
             return $this->weather['weather'];
         }
         return $res;
+    }
+
+    protected function KelvinToF($tempInKelvin){
+        try{
+            return (( $tempInKelvin - 273.15) * 9/5) + 32;
+        } catch (\Exception $e) {
+            error_log($e);
+        }
+        return;
     }
 }
