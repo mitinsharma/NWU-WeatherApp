@@ -34,8 +34,8 @@ class WeatherController extends Controller
                 error_log($e);
             }
         }
-        return $res;
-        //return view('weather')->with('res',$res);
+        //return $res;
+        return view('weather')->with('res',$res);
 }
 
     protected function getLocation(){

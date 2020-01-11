@@ -6,16 +6,13 @@
 
         <title>{{ config('app.name', 'WeatherApp') }}</title>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" crossorigin="anonymous">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" crossorigin="anonymous"></script>
-        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
         <!-- Styles -->
         <style>
             @import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800,900");
-            @import url("https://cdn.linearicons.com/free/1.0.0/icon-font.min.css");
             body {
                 font-family: 'Montserrat', sans-serif;
                 //background: #112233;
@@ -65,7 +62,9 @@
             .weather .current .icon
             {
                 text-align: center;
-                font-size: 64px;
+                width: 100px;
+                height: 100px;
+                overflow: auto;
                 flex-grow: 1;
                 text-shadow: 1px 1px #F68D2E;
             }

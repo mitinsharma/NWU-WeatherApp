@@ -2,30 +2,36 @@
 @section('content')
     <div class="container">
         <br/>
-        <h2 class="text-sm-center">NWU Weather Information:</h2>
+        <h3 class="text-sm-center">NWU Weather Information</h3>
         <br/>
         <br/>
         <div class="row">
-            <div class="col-md-4"></div>
-            <div class="col-md-4">
+            <div class="col-md-4 offset-md-4">
                 <div class="weather">
                     <div class="current">
-                        <div class="info">
-                            <div>&nbsp;</div>
-                            <div class="city"><small>CITY:</small> {{$res['location']}}</div>
-                            <div class="temp">{{ ($res['temperature'])}}&deg; <small>F</small></div>
-                            <div class="wind"><small><small>WIND:</small></small> 22 km/h</div>
-                            <div>&nbsp;</div>
-                        </div>
-                        <div class="icon">
-                            @foreach($res['forecast'] as $forecast)
-                                <img src="http://openweathermap.org/img/wn/{{$forecast['icon']}}@2x.png" title="{{$forecast['description']}}">
-                            @endforeach
-                        </div>
+                        @if(is_array($res) && !empty($res))
+                            <div class="info">
+                                <div>&nbsp;</div>
+                                @if(isset($res['location']))<div class="city"><small>CITY:</small> {{$res['location']}}</div>@endif
+                                @if(isset($res['temperature']))<div class="temp">{{ $res['temperature']}}&deg; <small>F</small></div>@endif
+                                @if(isset($res['windSpeed']))<div class="wind"><small>WIND:</small> {{$res['windSpeed']}} mph</div>@endif
+                                <div>&nbsp;</div>
+                            </div>
+                            <div class="icon">
+                                @foreach($res['forecast'] as $forecast)
+                                    @if(isset($forecast['icon']))
+                                        <img src="http://openweathermap.org/img/wn/{{$forecast['icon']}}@2x.png" title="@if(isset($forecast['description'])){{$forecast['description']}}@endif">
+                                    @endif
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="info">
+                                <small>Sorry, Weather information is not available.</small>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
-            <div class="col-md-4"></div>
         </div>
     </div>
 @endsection
