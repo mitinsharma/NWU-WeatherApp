@@ -20,7 +20,7 @@
                             <div class="icon">
                                 @foreach($res['forecast'] as $forecast)
                                     @if(isset($forecast['icon']))
-                                        <img src="http://openweathermap.org/img/wn/{{$forecast['icon']}}@2x.png" title="@if(isset($forecast['description'])){{$forecast['description']}}@endif">
+                                        <img src="http://openweathermap.org/img/wn/{{$forecast['icon']}}@2x.png" title="@if(isset($forecast['description'])){{$forecast['description']}}@endif" alt="@if(isset($forecast['description'])){{$forecast['description']}}@endif">
                                     @endif
                                 @endforeach
                             </div>
