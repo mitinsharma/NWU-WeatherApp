@@ -63,7 +63,7 @@ class WeatherController extends Controller
 
     protected function KelvinToF($tempInKelvin){
         try{
-            return (( $tempInKelvin - 273.15) * 9/5) + 32;
+            return round((( $tempInKelvin - 273.15) * 9/5) + 32);
         } catch (\Exception $e) {
             error_log($e);
         }
