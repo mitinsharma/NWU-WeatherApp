@@ -27,14 +27,15 @@ class WeatherController extends Controller
                 $res = array(
                     'location' => $this->getLocation(),
                     'temperature' => $this->getTemperature(),
-                    'forecast' => $this->getForecast()
+                    'forecast' => $this->getForecast(),
+                    'windSpeed' => $this->getWindSpeed()
                 );
             } catch (\Exception $e) {
                 error_log($e);
             }
         }
-        //return $res;
-        return view('weather')->with('res',$res);
+        return $res;
+        //return view('weather')->with('res',$res);
 }
 
     protected function getLocation(){
@@ -47,7 +48,7 @@ class WeatherController extends Controller
     protected function getTemperature(){
         if(is_array($this->weather) && $this->weather!=null && array_key_exists('main', $this->weather)){
             if(array_key_exists('temp', $this->weather['main'])){
-                return $this->KelvinToF($this->weather['main']['temp']);
+                return $this->kelvinToF($this->weather['main']['temp']);
             }
         }
         return null;
@@ -61,7 +62,25 @@ class WeatherController extends Controller
         return $res;
     }
 
-    protected function KelvinToF($tempInKelvin){
+    protected function getWindSpeed(){
+        if(is_array($this->weather) && $this->weather!=null && array_key_exists('wind', $this->weather)){
+            if(array_key_exists('speed', $this->weather['wind'])){
+                return $this->meterToMiles($this->weather['wind']['speed']);
+            }
+        }
+        return null;
+    }
+
+    protected function meterToMiles($meterPerSec){
+        try{
+            return round($meterPerSec * 2.23694);
+        } catch (\Exception $e) {
+            error_log($e);
+        }
+        return null;
+    }
+
+    protected function kelvinToF($tempInKelvin){
         try{
             return round((( $tempInKelvin - 273.15) * 9/5) + 32);
         } catch (\Exception $e) {
