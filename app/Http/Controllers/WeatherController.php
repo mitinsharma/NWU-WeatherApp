@@ -49,19 +49,24 @@ class WeatherController extends Controller
      * @return - view weather
      */
     public function index(){
-        $res = [];
+        $res = null;
+        //get env variables
         $this->w_url = Config::get('app.weather_url');
         $this->w_app_id = Config::get('app.weather_app_id');
+        //initialize city or use dynamic location using location api
         $this->city = 'London,uk';
+        //cache time in minutes
         $this->cache_time = 30;
         try{
             $nwu_forecast = $this->getNWUForecast();
-            $res = array(
-                'location' => $this->getLocation($nwu_forecast),
-                'temperature' => $this->getTemperature($nwu_forecast),
-                'forecast' => $this->getForecast($nwu_forecast),
-                'windSpeed' => $this->getWindSpeed($nwu_forecast)
-            );
+            if($nwu_forecast !== null) {
+                $res = array(
+                    'location' => $this->getLocation($nwu_forecast),
+                    'temperature' => $this->getTemperature($nwu_forecast),
+                    'forecast' => $this->getForecast($nwu_forecast),
+                    'windSpeed' => $this->getWindSpeed($nwu_forecast)
+                );
+            }
         } catch (\Exception $e) {
             error_log($e);
         }
@@ -76,12 +81,16 @@ class WeatherController extends Controller
      */
     protected function getNWUForecast(){
         return Cache::remember('nwu_forecast',$this->cache_time, function(){
+            //call api using GuzzleHTTP client
             $client = new \GuzzleHttp\Client();
             $url = $this->w_url . '?q='. $this->city . '&appid=' . $this->w_app_id;
             $http = $client->get($url);
             if ($http->getStatusCode() == 200) {
                 $body = $http->getBody();
                 return json_decode($body,true);
+            } else {
+                error_log('Error: HTTP status code: ' . $http->getStatusCode());
+                return null;
             }
         });
     }
