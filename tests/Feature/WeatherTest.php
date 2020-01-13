@@ -66,13 +66,13 @@ class WeatherTest extends TestCase
         return $arr;
     }
 
-
     /**
      * @depends testProvideData
      */
     public function testGetTemperature($a){
         $temperature = $this->weather_class->getTemperature($a);
-        $this->assertNotNull($temperature);
+        $this->assertNotNull($temperature,'The value of temperature is null');
+        $this->assertIsNotInt($temperature,'Temperature values is not a number');
     }
 
     /**
@@ -80,7 +80,7 @@ class WeatherTest extends TestCase
      */
     public function testGetLocation($a){
         $loc = $this->weather_class->getLocation($a);
-        $this->assertNotNull($loc);
+        $this->assertNotNull($loc,'The value of location is null');
     }
 
     /**
@@ -88,7 +88,7 @@ class WeatherTest extends TestCase
      */
     public function testGetForecast($a){
         $forecast = $this->weather_class->getForecast($a);
-        $this->assertNotNull($forecast);
+        $this->assertNotNull($forecast,'The value of forecast is null');
     }
 
     /**
@@ -96,10 +96,47 @@ class WeatherTest extends TestCase
      */
     public function testGetWindSpeed($a){
         $ws = $this->weather_class->getWindSpeed($a);
-        $this->assertNotNull($ws);
+        $this->assertNotNull($ws,'The value of WindSpeed is null');
     }
 
     public function testMeterToMiles(){
-        $this->assertNotNull($this->weather_class->meterToMiles(123456));
+        $this->assertNotNull($this->weather_class->meterToMiles(12));
+        $this->assertSame(2.2,$this->weather_class->meterToMiles(1),'Logical error in converting meter per seconds to miles per hour');
+    }
+
+    public function additionProvider1(){
+        return [
+            [1,2.2],
+            [99,221.5],
+            [45,100.7]
+        ];
+    }
+
+    /**
+     * @dataProvider additionProvider1
+     */
+    public function testMeterToMilesPosibility($x,$expected){
+        $this->assertSame($expected,$this->weather_class->meterToMiles($x),'Logical error in converting meter per seconds to miles per hour');
+    }
+
+    public function testkelvinToF(){
+        $this->assertNotNull($this->weather_class->kelvinToF(12));
+        $this->assertSame(45.0,$this->weather_class->kelvinToF(280.32),'Logical error in converting kelvin to F');
+        $this->assertGreaterThan(-459.67,$this->weather_class->kelvinToF(280.32),'Temperature cannot be less than -459.67 F');
+    }
+
+    public function additionProvider2(){
+        return [
+            [280.32,45.0],
+            [0,-460.0],
+            [320,116.0]
+        ];
+    }
+
+    /**
+     * @dataProvider additionProvider2
+     */
+    public function testkelvinToFPossibility($x,$expected){
+        $this->assertSame($expected,$this->weather_class->kelvinToF($x),'Logical error in converting kelvin to F');
     }
 }

@@ -56,14 +56,13 @@ class WeatherController extends Controller
         $http = $client->get($url);
         if ($http->getStatusCode() == 200) {
             $body = $http->getBody();
-            $this->weather = json_decode($body,true);
-            //error_log($body);
+            $weather = json_decode($body,true);
             try{
                 $res = array(
-                    'location' => $this->getLocation($this->weather),
-                    'temperature' => $this->getTemperature($this->weather),
-                    'forecast' => $this->getForecast($this->weather),
-                    'windSpeed' => $this->getWindSpeed($this->weather)
+                    'location' => $this->getLocation($weather),
+                    'temperature' => $this->getTemperature($weather),
+                    'forecast' => $this->getForecast($weather),
+                    'windSpeed' => $this->getWindSpeed($weather)
                 );
             } catch (\Exception $e) {
                 error_log($e);
@@ -143,7 +142,7 @@ class WeatherController extends Controller
     /**
      * Convert Kelvin units to fahrenheit units
      * @param tempInKelvin - temperature values in kelvin units
-     * @return - int tempratureInFahrenheit
+     * @return - float tempratureInFahrenheit
      */
     public function kelvinToF($tempInKelvin){
         try{
