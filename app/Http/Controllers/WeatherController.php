@@ -36,8 +36,8 @@ use Config;
 use Log;
 class WeatherController extends Controller
 {
-    public $w_url;
-    public $w_app_id;
+    private $w_url;
+    private $w_app_id;
 
     /**
      * Retrieve the weather information from wwather api
@@ -77,7 +77,7 @@ class WeatherController extends Controller
      * retrive field name in the weather api result object
      * @return - String location
      */
-    public function getLocation($weather_result){
+    protected function getLocation($weather_result){
         if(is_array($weather_result) && $weather_result!=null && array_key_exists('name', $weather_result)){
             return $weather_result['name'];
         }
@@ -89,7 +89,7 @@ class WeatherController extends Controller
      * retrive field 'main' in the weather api result object
      * @return - float tempratureInFahrenheit
      */
-    public function getTemperature($weather_result){
+    protected function getTemperature($weather_result){
         if(is_array($weather_result) && $weather_result!=null && array_key_exists('main', $weather_result)){
             if(array_key_exists('temp', $weather_result['main'])){
                 return $this->kelvinToF($weather_result['main']['temp']);
@@ -103,7 +103,7 @@ class WeatherController extends Controller
      * retrive field 'weather' in the weather api result object
      * @return - associativeArray weather
      */
-    public function getForecast($weather_result){
+    protected function getForecast($weather_result){
         $res = array();
         if(is_array($weather_result) && $weather_result!=null && array_key_exists('weather', $weather_result)){
             return $weather_result['weather'];
@@ -116,7 +116,7 @@ class WeatherController extends Controller
      * retrive field 'wind->speed' in the weather api result object
      * @return - float windSpeedInMPH
      */
-    public function getWindSpeed($weather_result){
+    protected function getWindSpeed($weather_result){
         if(is_array($weather_result) && $weather_result!=null && array_key_exists('wind', $weather_result)){
             if(array_key_exists('speed', $weather_result['wind'])){
                 return $this->meterToMiles($weather_result['wind']['speed']);
@@ -130,7 +130,7 @@ class WeatherController extends Controller
      * @param meterPerSec - speed values in meterPerSec
      * @return - float speedInMPH
      */
-    public function meterToMiles($meterPerSec){
+    protected function meterToMiles($meterPerSec){
         try{
             return round($meterPerSec * 2.23694,1);
         } catch (\Exception $e) {
@@ -144,7 +144,7 @@ class WeatherController extends Controller
      * @param tempInKelvin - temperature values in kelvin units
      * @return - float tempratureInFahrenheit
      */
-    public function kelvinToF($tempInKelvin){
+    protected function kelvinToF($tempInKelvin){
         try{
             return round((( $tempInKelvin - 273.15) * 9/5) + 32);
         } catch (\Exception $e) {
