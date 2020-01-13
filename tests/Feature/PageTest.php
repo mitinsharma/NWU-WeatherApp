@@ -9,7 +9,7 @@ use Tests\TestCase;
 class PageTest extends TestCase
 {
     /**
-     * A basic feature test example.
+     * A homepage test.
      *
      * @return void
      */
