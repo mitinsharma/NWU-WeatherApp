@@ -34,10 +34,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Config;
 use Log;
+use \Cache;
 class WeatherController extends Controller
 {
     private $w_url;
     private $w_app_id;
+    private $city;
+    private $cache_time;
 
     /**
      * Retrieve the weather information from wwather api
@@ -49,27 +52,38 @@ class WeatherController extends Controller
         $res = [];
         $this->w_url = Config::get('app.weather_url');
         $this->w_app_id = Config::get('app.weather_app_id');
-        $city = 'London,uk';
-
-        $client = new \GuzzleHttp\Client();
-        $url = $this->w_url . '?q='. $city . '&appid=' . $this->w_app_id;
-        $http = $client->get($url);
-        if ($http->getStatusCode() == 200) {
-            $body = $http->getBody();
-            $weather = json_decode($body,true);
-            try{
-                $res = array(
-                    'location' => $this->getLocation($weather),
-                    'temperature' => $this->getTemperature($weather),
-                    'forecast' => $this->getForecast($weather),
-                    'windSpeed' => $this->getWindSpeed($weather)
-                );
-            } catch (\Exception $e) {
-                error_log($e);
-            }
+        $this->city = 'London,uk';
+        $this->cache_time = 30;
+        try{
+            $nwu_forecast = $this->getNWUForecast();
+            $res = array(
+                'location' => $this->getLocation($nwu_forecast),
+                'temperature' => $this->getTemperature($nwu_forecast),
+                'forecast' => $this->getForecast($nwu_forecast),
+                'windSpeed' => $this->getWindSpeed($nwu_forecast)
+            );
+        } catch (\Exception $e) {
+            error_log($e);
         }
-        //return $res;
         return view('weather')->with('res',$res);
+    }
+
+    /**
+     * Request Weather API using GuzzleHTTP pachage
+     * Cache the result using Cache::remember function for 30 minutes
+     *
+     * @return - array
+     */
+    protected function getNWUForecast(){
+        return Cache::remember('nwu_forecast',$this->cache_time, function(){
+            $client = new \GuzzleHttp\Client();
+            $url = $this->w_url . '?q='. $this->city . '&appid=' . $this->w_app_id;
+            $http = $client->get($url);
+            if ($http->getStatusCode() == 200) {
+                $body = $http->getBody();
+                return json_decode($body,true);
+            }
+        });
     }
 
     /**
