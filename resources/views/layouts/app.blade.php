@@ -29,7 +29,7 @@
             {
                 display: flex;
                 flex-flow: row wrap;
-                background-image: url("http://www.prepbootstrap.com/Content/images/shared/misc/london-view.png");
+                background-image: url("{{ URL::to('/') }}/images/london-view.png");
                 background-repeat: repeat-x;
                 color: white;
                 padding: 20px;
