@@ -169,7 +169,8 @@ class WeatherTest extends TestCase
 
     /**
      * @dataProvider additionProvider1
-     *
+     */
+    /*
      * This function takes @dataProvider as arguments to
      * test the range of possible dataset in meterToMiles()
      *
@@ -207,7 +208,8 @@ class WeatherTest extends TestCase
 
     /**
      * @dataProvider additionProvider2
-     *
+     */
+    /*
      * This function takes @dataProvider as arguments to
      * test the range of possible dataset in kelvinToF()
      *
