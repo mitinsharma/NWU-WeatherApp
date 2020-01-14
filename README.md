@@ -5,6 +5,9 @@
 <a href=""><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
+## Demo
+ Link to the webpage [http://nwu.mitinsharma.com/](http://nwu.mitinsharma.com/).
+
 ## About 
 NWU Weather Application is a web based weather application that demonstrate the implementation of weather api. This application is build on Laravel PHP framework.
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
