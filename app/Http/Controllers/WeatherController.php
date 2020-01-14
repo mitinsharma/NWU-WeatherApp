@@ -2,7 +2,7 @@
 /**
  * Weather App
  * Development started and managed by Mitin Sharma
- * (c) 2019
+ * (c) 2020
  * http://www.mitinsharma.com
  *
  * @author mitin sharma
