@@ -69,6 +69,9 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 ```
 
 ## Perfomance Concerns
+- Cross Browser testing.
+- Google Lighhouse Audit.
+- Google Chrome Performance monitor.
 - Google Page Insights Report [link](https://developers.google.com/speed/pagespeed/insights/?url=nwu.mitinsharma.com).
 - GTmeterix Report [link](https://gtmetrix.com/reports/nwu.mitinsharma.com/6wnShGYq).
 - Image optization using optipng and jpegoptim packages in linux.
