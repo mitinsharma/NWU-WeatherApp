@@ -10,11 +10,11 @@
 
 ## About 
 NWU Weather Application is a web based weather application that demonstrate the implementation of weather api. This application is build on Laravel PHP framework.
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Laravel is accessible, powerful, and provides the tools required for large, robust applications.
 ## Features
 - Displays location from API to web application.
 - Calculate(kelvin units to fahrenheit units) and display temperature.
-- Calculate(meter per seconds to miles per hour) and display wind speed.
+- Calculate(meter per second to miles per hour) and display wind speed.
 - Gets forecast information such as weather info, icon, description from API and displays on the webpage.
 
 ## How to implementation this weather API in PHP Laravel
@@ -56,7 +56,7 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
     php config:clear
 ```
 ## How to implement Unit Test
-- Webpage test, test file to test successful retrieval of webpage is at tests/Feature/PageTest.php [link](https://github.com/mitinsharma/NWU-WeatherApp/blob/master/tests/Feature/PageTest.php).
+- Webpage test, test file to test successful retrieval of web page is at tests/Feature/PageTest.php [link](https://github.com/mitinsharma/NWU-WeatherApp/blob/master/tests/Feature/PageTest.php).
 - Test is written to test the status of homepage.
 - In order to perform Unit Test, You need to change access specifiers to public for all the data members in WeatherController.php
 - Unit test file is located at tests/Feature/WeatherTest.php [link](https://github.com/mitinsharma/NWU-WeatherApp/blob/master/tests/Feature/WeatherTest.php).
@@ -69,13 +69,13 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
     ./vendor/bin/phpunit
 ```
 
-## Perfomance Concerns
+## Performance Concerns
 - Cross Browser testing.
-- Google Lighhouse Audit.
+- Google LightHouse Audit.
 - Google Chrome Performance monitor.
 - Google Page Insights Report [link](https://developers.google.com/speed/pagespeed/insights/?url=nwu.mitinsharma.com).
 - GTmeterix Report [link](https://gtmetrix.com/reports/nwu.mitinsharma.com/6wnShGYq).
-- Image optization using optipng and jpegoptim packages in linux.
+- Image optimization using optipng and jpegoptim packages in linux.
 - Run these commands to optimize all the images in the directory.
 ```
     find -type f -name "*.png" -exec optipng {} \;
@@ -102,4 +102,4 @@ Please make sure to update tests as appropriate.
 
 ## License
 
-This web application is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This web application is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
