@@ -58,6 +58,7 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 ## How to implement Unit Test
 - Webpage test, test file to test successful retrieval of webpage is at tests/Feature/PageTest.php [link](https://github.com/mitinsharma/NWU-WeatherApp/blob/master/tests/Feature/PageTest.php).
 - Test is written to test the status of homepage.
+- In order to perform Unit Test, You need to change access specifiers to public for all the data members in WeatherController.php
 - Unit test file is located at tests/Feature/WeatherTest.php [link](https://github.com/mitinsharma/NWU-WeatherApp/blob/master/tests/Feature/WeatherTest.php).
 - Command to run tests in Windows
 ```
