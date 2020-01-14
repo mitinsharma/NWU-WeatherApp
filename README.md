@@ -1,4 +1,4 @@
-<p align="center">NWU WEATHER APP</p>
+<h2 align="center">NWU WEATHER APP</h2>
 
 <p align="center">
 <a href=""><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
