@@ -2,7 +2,7 @@
 /**
  * Weather App
  * Development started and managed by Mitin Sharma
- * (c) 2019
+ * (c) 2020
  * http://www.mitinsharma.com
  *
  * @author mitin sharma
@@ -34,10 +34,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Config;
 use Log;
+use \Cache;
 class WeatherController extends Controller
 {
     private $w_url;
     private $w_app_id;
+    private $city;
+    private $cache_time;
 
     /**
      * Retrieve the weather information from wwather api
@@ -46,30 +49,50 @@ class WeatherController extends Controller
      * @return - view weather
      */
     public function index(){
-        $res = [];
+        $res = null;
+        //get env variables
         $this->w_url = Config::get('app.weather_url');
         $this->w_app_id = Config::get('app.weather_app_id');
-        $city = 'London,uk';
-
-        $client = new \GuzzleHttp\Client();
-        $url = $this->w_url . '?q='. $city . '&appid=' . $this->w_app_id;
-        $http = $client->get($url);
-        if ($http->getStatusCode() == 200) {
-            $body = $http->getBody();
-            $weather = json_decode($body,true);
-            try{
+        //initialize city or use dynamic location using location api
+        $this->city = 'London,uk';
+        //cache time in minutes
+        $this->cache_time = 30;
+        try{
+            $nwu_forecast = $this->getNWUForecast();
+            if($nwu_forecast !== null) {
                 $res = array(
-                    'location' => $this->getLocation($weather),
-                    'temperature' => $this->getTemperature($weather),
-                    'forecast' => $this->getForecast($weather),
-                    'windSpeed' => $this->getWindSpeed($weather)
+                    'location' => $this->getLocation($nwu_forecast),
+                    'temperature' => $this->getTemperature($nwu_forecast),
+                    'forecast' => $this->getForecast($nwu_forecast),
+                    'windSpeed' => $this->getWindSpeed($nwu_forecast)
                 );
-            } catch (\Exception $e) {
-                error_log($e);
             }
+        } catch (\Exception $e) {
+            error_log($e);
         }
-        //return $res;
         return view('weather')->with('res',$res);
+    }
+
+    /**
+     * Request Weather API using GuzzleHTTP pachage
+     * Cache the result using Cache::remember function for 30 minutes
+     *
+     * @return - array
+     */
+    protected function getNWUForecast(){
+        return Cache::remember('nwu_forecast',$this->cache_time, function(){
+            //call api using GuzzleHTTP client
+            $client = new \GuzzleHttp\Client();
+            $url = $this->w_url . '?q='. $this->city . '&appid=' . $this->w_app_id;
+            $http = $client->get($url);
+            if ($http->getStatusCode() == 200) {
+                $body = $http->getBody();
+                return json_decode($body,true);
+            } else {
+                error_log('Error: HTTP status code: ' . $http->getStatusCode());
+                return null;
+            }
+        });
     }
 
     /**
