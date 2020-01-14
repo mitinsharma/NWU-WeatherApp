@@ -17,7 +17,7 @@ Laravel is accessible, powerful, and provides the tools required for large, robu
 - Calculate(meter per second to miles per hour) and display wind speed.
 - Gets forecast information such as weather info, icon, description from API and displays on the webpage.
 
-## How to implementation this weather API in PHP Laravel
+## How to implement weather API in PHP Laravel
 - Download or clone this repository [download link.](https://github.com/mitinsharma/NWU-WeatherApp.git)
 - Install or update laravel project using composer command in project directory.
 ```
